@@ -1,0 +1,47 @@
+#!/bin/sh
+
+: ${REQUEST_RATES:="1 10 30 50 100"}
+: ${TEST_DURATION:="5m"}
+
+set -e
+
+usage () {
+  echo "Usage: $(basename "$0") <baseurl>"
+  echo
+  echo "Accepts a list of paths to test on STDIN."
+  echo
+  echo "e.g. $(basename "$0") http://test.ckanhosted.org <views"
+}
+
+urls () {
+  local root=$1
+  egrep -v '(^#|^$)' | xargs -IREPL echo "GET ${root}REPL"
+}
+
+reportname () {
+  local rate=$1
+  echo "$(date +%Y%m%dT%H%M%S)_load_${rate}.bin"
+}
+
+main () {
+  local root=$1
+  set -u
+
+  if [ $# -ne 1 ]; then
+    usage >&2
+    exit 1
+  fi
+
+  urls=$(urls "$root")
+
+  trap "break" INT
+  for rate in $REQUEST_RATES; do
+    echo "---- $rate req/s"
+    echo "$urls" |
+    vegeta attack -duration "$TEST_DURATION" -output "$(reportname "$rate")" &
+    wait
+  done
+  trap - INT
+}
+
+main "$@"

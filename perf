@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+usage () {
+  echo "Usage: $(basename "$0") <baseurl>"
+  echo
+  echo "Accepts a list of paths to test on STDIN."
+  echo
+  echo "e.g. $(basename "$0") http://test.ckanhosted.org <views"
+}
+
+urls () {
+  egrep -v '(^#|^$)'
+}
+
+reportname () {
+  echo "$(date +%Y%m%dT%H%M%S)_perf.txt"
+}
+
+main () {
+  local root=$1
+  set -u
+
+  if [ $# -ne 1 ]; then
+    usage >&2
+    exit 1
+  fi
+
+  trap "break" INT
+  urls | while read url; do
+    echo "---- $url"
+    wrk -c1 -t1 -d60s --latency "$root$url" &
+    wait
+  done | tee "$(reportname)"
+  trap - INT
+}
+
+main "$@"

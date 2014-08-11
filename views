@@ -1,0 +1,50 @@
+# Homepage
+/
+
+# Datasets
+/dataset
+/dataset?page=2
+
+# Datasets tags filter
+/dataset?tags=transparency
+
+# Dataset
+/dataset/adur_district_spending
+/dataset/us-national-foreclosure-statistics-january-2012
+/dataset/afghanistan-election-data
+
+# Dataset activity stream
+/dataset/activity/adur_district_spending
+/dataset/activity/us-national-foreclosure-statistics-january-2012
+/dataset/activity/afghanistan-election-data
+
+# Resource
+/dataset/adur_district_spending/resource/04127ad5-77e5-4a08-9f40-12d3c383e460
+/dataset/afghanistan-election-data/resource/f6331f99-51f6-44d9-95b9-b20f3b74f360
+
+# Resource download
+/dataset/e4f345c5-5fc9-4767-9ed2-74b3c4ea2bc1/resource/04127ad5-77e5-4a08-9f40-12d3c383e460/download/TurkishVanCat.jpg
+
+# Organisations
+/organization
+
+# Organisation
+/organization/itest
+
+# Groups
+/group
+
+# Group
+/group/data-explorer
+
+# Group activity stream
+/group/activity/data-explorer/0
+
+# API package_list
+/api/3/action/package_list
+
+# API tag_list
+/api/3/action/tag_list
+
+# API datastore_search
+/api/action/datastore_search?resource_id=04127ad5-77e5-4a08-9f40-12d3c383e460&limit=20
